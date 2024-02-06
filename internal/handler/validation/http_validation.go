@@ -29,34 +29,38 @@ func ValidateHttpData(d interface{}) *httperr.RestErr {
 			fieldName := e.Field()
 
 			switch e.Tag() {
-				case "required":
-					cause.Message = fmt.Sprintf("%s is required", fieldName)
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				case "uuid4":
-					cause.Message = fmt.Sprintf("%s is not valid uuid", fieldName)
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				case "boolean":
-					cause.Message = fmt.Sprintf("%s is not valid boolean", fieldName)
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				case "min":
-					cause.Message = fmt.Sprintf("%s must be greater than %s", fieldName, e.Param())
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				case "max":
-					cause.Message = fmt.Sprintf("%s must be less than %s", fieldName, e.Param())
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				case "email":
-					cause.Message = fmt.Sprintf("%s is not valid email", fieldName)
-					cause.Field = fieldName
-					cause.Value = e.Value()
-				default:
-					cause.Message = "invalid field"
-					cause.Field = fieldName
-					cause.Value = e.Value()
+			case "required":
+				cause.Message = fmt.Sprintf("%s is required", fieldName)
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "uuid4":
+				cause.Message = fmt.Sprintf("%s is not valid uuid", fieldName)
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "boolean":
+				cause.Message = fmt.Sprintf("%s is not valid boolean", fieldName)
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "min":
+				cause.Message = fmt.Sprintf("%s must be greater than %s", fieldName, e.Param())
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "max":
+				cause.Message = fmt.Sprintf("%s must be less than %s", fieldName, e.Param())
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "email":
+				cause.Message = fmt.Sprintf("%s is not valid email", fieldName)
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			case "containsany":
+				cause.Message = fmt.Sprintf("%s must contain at least one of these caracters: !@#$*", fieldName)
+				cause.Field = fieldName
+				cause.Value = e.Value()
+			default:
+				cause.Message = "invalid field"
+				cause.Field = fieldName
+				cause.Value = e.Value()
 			}
 
 			errorsCauses = append(errorsCauses, cause)
