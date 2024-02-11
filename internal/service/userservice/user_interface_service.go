@@ -1,6 +1,11 @@
 package userservice
 
-import "github.com/nathanfabio/completeAPIGo/internal/repository/userepository"
+import (
+	"context"
+
+	"github.com/nathanfabio/completeAPIGo/internal/dto"
+	"github.com/nathanfabio/completeAPIGo/internal/repository/userepository"
+)
 
 func NewUserService(repo userepository.UserRepository) UserService {
 	return &service{
@@ -13,5 +18,5 @@ type service struct {
 }
 
 type UserService interface {
-	CreateUser() error
+	CreateUser(ctx context.Context, u dto.CreateUserDto) error
 }

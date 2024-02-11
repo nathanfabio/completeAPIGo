@@ -38,4 +38,15 @@ func (h *handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(httperr)
 		return
 	}
+
+	err = h.service.CreateUser(r.Context(), req)
+	if err != nil {
+		slog.Error(fmt.Sprintf("error to create user: %v", err), slog.String("package", "handler_user"))
+		w.WriteHeader(http.StatusInternalServerError)
+		msg := httperr.NewBadRequestError("error to create user")
+		json.NewEncoder(w).Encode(msg)
+		return
+	}
 }
+
+
